@@ -37,6 +37,14 @@ export function App() {
   const currentMapping = slideMappings[activeSlideIndex] || slideMappings[0];
   const currentSlideFile = currentMapping.file;
 
+  // Background preloading of all SVG slide assets for instant zero-latency slide transitions
+  useEffect(() => {
+    slideMappings.forEach((slide) => {
+      const img = new Image();
+      img.src = `/assets/${slide.file}`;
+    });
+  }, []);
+
   const selectSection = (section: string, defaultIndex: number) => {
     setActiveSection(section);
     setActiveSlideIndex(defaultIndex);
@@ -180,6 +188,8 @@ export function App() {
                 key={currentSlideFile}
                 src={`/assets/${currentSlideFile}`}
                 alt={currentMapping.name}
+                loading="eager"
+                decoding="async"
               />
             </div>
 
@@ -274,6 +284,8 @@ export function App() {
               src={`/assets/${currentSlideFile}`}
               alt={currentMapping.name}
               className="modal-svg-image"
+              loading="eager"
+              decoding="async"
             />
 
             <button
