@@ -37,7 +37,16 @@ export function App() {
 
   useEffect(() => {
     fetch("/api/assets")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          return fetch("/api/assets.json");
+        }
+        return res;
+      })
+      .then((res) => {
+        if (!res.ok) throw new Error("API route unavailable");
+        return res.json();
+      })
       .then((data) => {
         if (data.assets && data.assets.length > 0) {
           setAssets(data.assets);

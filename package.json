@@ -1,0 +1,10 @@
+{
+  "name": "akr-brand-guidelines-delivery-repo",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "cd SlugNplug && bun install && bun run build",
+    "dev": "cd SlugNplug && bun run dev",
+    "start": "cd SlugNplug && bun run start"
+  }
+}

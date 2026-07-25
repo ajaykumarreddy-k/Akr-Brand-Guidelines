@@ -1,0 +1,11 @@
+{
+  "buildCommand": "cd SlugNplug && bun install && bun run build",
+  "outputDirectory": "SlugNplug/dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/api/assets", "destination": "/api/assets.json" },
+    { "source": "/assets/(.*)", "destination": "/assets/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
