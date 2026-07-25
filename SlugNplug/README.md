@@ -4,24 +4,34 @@
 
 ---
 
+## 🌐 Live Production Deployment
+
+Explore the live, deployed web application on Vercel:
+
+👉 **[https://akr-brand-guidelines-snp.vercel.app/](https://akr-brand-guidelines-snp.vercel.app/)**
+
+[![Live Demo](https://img.shields.io/badge/Live_App-akr--brand--guidelines--snp.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://akr-brand-guidelines-snp.vercel.app/)
+
+---
+
 ## 🚀 Overview
 
 **Slug N Plug** is the official digital interactive viewer for the **AKR Brand Guidelines & Delivery Repository**. It provides an intuitive, high-performance web experience that allows designers, developers, and stakeholders to explore all 18 brand guideline vector slides seamlessly.
 
-Powered by Bun's native high-performance HTTP server (`Bun.serve()`), the application dynamically serves SVG assets directly from the file system and renders an interactive web presentation interface with keyboard shortcuts, full-screen lightbox viewing, and categorized section filtering.
+Powered by Bun's native high-performance HTTP server (`Bun.serve()`) for local development and static CDN bundling for Vercel edge deployment, the application dynamically serves SVG assets and renders an interactive web presentation interface with keyboard shortcuts, full-screen lightbox viewing, and categorized section filtering.
 
 ---
 
 ## ✨ Key Features
 
-- **⚡ Native Bun REST & Asset Server**: Zero-overhead static asset streaming and dynamic API routing handled directly by `Bun.serve()`.
+- **🌐 Live Vercel Edge & Bun REST Server**: Zero-overhead static asset streaming and dynamic API routing.
 - **📂 Categorized Section Navigation**:
   - `01. Strategy` — Index, Vision, Brand Identity, & Palette Rules (Slides 01–05)
   - `02. Identity` — Grid Systems, Type Hierarchy, Fonts, & Layouts (Slides 06–10)
   - `03. Design Guidelines & Rules` — Components, Tokens, Logomarks, & Specifications (Slides 11–18)
 - **🔍 Fullscreen Lightbox Modal**: High-resolution SVG preview modal with keyboard navigation (`←` Prev, `→` Next, `ESC` Close).
 - **🎨 Glassmorphic & Dark Mode UI**: Modern visual layout with responsive sidebar selection, slide counters, and smooth scrolling.
-- **🔄 Dynamic API Asset Loading**: Asynchronously fetches and sorts guideline assets (`/api/assets`) with fallback gracefully included.
+- **🔄 Dynamic API Asset Loading**: Asynchronously fetches and sorts guideline assets (`/api/assets`) with static JSON fallback for Vercel CDN deployment.
 
 ---
 
@@ -29,6 +39,7 @@ Powered by Bun's native high-performance HTTP server (`Bun.serve()`), the applic
 
 | Technology | Purpose |
 | :--- | :--- |
+| **[Vercel Cloud Platform](https://vercel.com)** | Global CDN hosting and serverless edge deployment |
 | **[Bun Runtime](https://bun.sh)** | All-in-one JavaScript runtime, bundler, and server environment |
 | **[React 19](https://react.dev)** | UI framework for responsive component architecture |
 | **[TypeScript](https://www.typescriptlang.org)** | Type safety across components and server routes |
@@ -55,7 +66,7 @@ bun dev
 Navigate to `http://localhost:3000` in your web browser.
 
 ### 3. Production Build
-Bundles the single page application for deployment into the `dist/` directory:
+Bundles the single page application and prepares static vector assets in `dist/`:
 ```bash
 bun build
 ```
@@ -69,7 +80,7 @@ bun start
 
 ## 📡 API Reference & Routing
 
-The server is configured in `src/index.ts` utilizing `Bun.serve()` with custom routes:
+The application serves standard endpoints both dynamically during local development and statically on Vercel deployment:
 
 ### Endpoints
 
@@ -89,14 +100,16 @@ SlugNplug/
 │   ├── 1.svg               # Slide 01: Index & Overview
 │   ├── p2.svg              # Slide 02: Brand Identity
 │   └── ...                 # Slides 03 through 18
+├── scripts/
+│   └── build.ts            # Vercel & Bun production static bundler
 ├── src/
 │   ├── index.ts            # Bun.serve() backend entry point & REST API
 │   ├── index.html          # HTML5 entry template
 │   ├── frontend.tsx        # React root mounting entry point
 │   ├── App.tsx             # Main application component & lightbox logic
+│   ├── logo.svg            # Official AKR brand favicon
 │   └── index.css           # Global stylesheet & design system CSS tokens
-├── bunfig.toml             # Bun configuration file
-├── tsconfig.json           # TypeScript configuration
+├── vercel.json             # Vercel deployment configuration
 ├── package.json            # Manifest file & script definitions
 └── README.md               # App documentation
 ```
@@ -106,8 +119,9 @@ SlugNplug/
 ## 👤 Author & Maintainer
 
 Designed & Developed by **Ajay Kumar Reddy Krishnareddygari**
-- **Portfolio**: [ajaykumarreddykrishnareddygari-portfolio.vercel.app](https://ajaykumarreddykrishnareddygari-portfolio.vercel.app/)
-- **GitHub**: [@ajaykumarreddy-k](https://github.com/ajaykumarreddy-k)
+- 🌐 **Live Web Application**: [https://akr-brand-guidelines-snp.vercel.app/](https://akr-brand-guidelines-snp.vercel.app/)
+- 🌐 **Portfolio**: [ajaykumarreddykrishnareddygari-portfolio.vercel.app](https://ajaykumarreddykrishnareddygari-portfolio.vercel.app/)
+- 🐙 **GitHub**: [@ajaykumarreddy-k](https://github.com/ajaykumarreddy-k)
 
 ---
 

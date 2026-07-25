@@ -4,16 +4,25 @@
 
 ---
 
+## 🌐 Live Web Application & Deployment
+
+Access the interactive **AKR Brand Guidelines Guide Book & Showcase** live on Vercel:
+
+👉 **[https://akr-brand-guidelines-snp.vercel.app/](https://akr-brand-guidelines-snp.vercel.app/)**
+
+[![Live Demo](https://img.shields.io/badge/Live_App-akr--brand--guidelines--snp.vercel.app-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://akr-brand-guidelines-snp.vercel.app/)
+[![Brand Identity](https://img.shields.io/badge/AKR-Brand_Guidelines-000000?style=for-the-badge&logo=storybook&logoColor=white)](#)
+[![Vector Assets](https://img.shields.io/badge/Assets-18_SVG_Vectors-FF5722?style=for-the-badge&logo=inkscape&logoColor=white)](#)
+[![Interactive App](https://img.shields.io/badge/App-Slug_N_Plug-007ACC?style=for-the-badge)](https://akr-brand-guidelines-snp.vercel.app/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](#)
+
+---
+
 ## 🌟 Executive Overview
 
 Welcome to the official **AKR - Guide Book and Delivery Repository**. This repository contains the complete vector asset bundle, brand architecture, design guidelines, and interactive digital viewer for **AKR**. 
 
 Engineered for designers, front-end engineers, product managers, and brand strategists, this delivery repository ensures complete visual consistency across all physical and digital touchpoints.
-
-[![Brand Identity](https://img.shields.io/badge/AKR-Brand_Guidelines-000000?style=for-the-badge&logo=storybook&logoColor=white)](#)
-[![Vector Assets](https://img.shields.io/badge/Assets-18_SVG_Vectors-FF5722?style=for-the-badge&logo=inkscape&logoColor=white)](#)
-[![Interactive App](https://img.shields.io/badge/App-Slug_N_Plug-007ACC?style=for-the-badge&logo=bun&logoColor=white)](#slug-n-plug-interactive-brand-viewer)
-[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](#)
 
 ---
 
@@ -42,14 +51,17 @@ AKR-Guidelines/
 │   └── p18.svg                     # 18. Final Specifications
 ├── SlugNplug/                      # ⚡ Dynamic Bun + React Interactive Viewer App
 │   ├── Main - asssets/             # SVG source assets for web app server
+│   ├── scripts/                    # Vercel static build & asset scripts
 │   ├── src/                        # React components, styles & Bun server
 │   │   ├── App.tsx                 # Core viewer UI with lightbox & nav
 │   │   ├── index.ts                # Bun.serve() native REST & asset server
 │   │   ├── index.html              # App HTML entry point
 │   │   └── index.css               # Design system & dark theme styles
 │   ├── package.json                # Project dependencies & scripts
-│   ├── bunfig.toml                 # Bun configuration
+│   ├── vercel.json                 # Vercel deployment & routing config
 │   └── README.md                   # Slug N Plug app-specific documentation
+├── package.json                    # Root package manifest for Vercel
+├── vercel.json                     # Root Vercel deployment configuration
 └── README.md                       # 📜 Root Delivery Guide & Repository Overview
 ```
 
@@ -120,8 +132,10 @@ All official vector assets are housed in the root [`assets/`](file:///home/princ
 
 This repository includes **Slug N Plug**, an ultra-fast, modern web application designed to preview, navigate, and inspect all AKR brand guidelines interactively.
 
+🔗 **Live Deployment URL**: [https://akr-brand-guidelines-snp.vercel.app/](https://akr-brand-guidelines-snp.vercel.app/)
+
 ### 🚀 Key Features of Slug N Plug
-- **Bun-Native REST API & Asset Server**: Built with `Bun.serve()` delivering zero-overhead SVG asset streaming.
+- **Vercel & Bun-Native REST API**: Seamless asset streaming and dynamic routing on edge production environments.
 - **Categorized Interactive Navigation**: Instant switching between `Strategy`, `Identity`, and `Design Guidelines`.
 - **Fullscreen Lightbox**: Immersive vector viewing modal with keyboard controls (`←` / `→` arrow key navigation and `ESC` to close).
 - **Responsive & Modern Design**: Sleek dark aesthetic featuring smooth transitions and custom scroll states.
@@ -161,6 +175,7 @@ Open your browser and navigate to `http://localhost:3000` to interact with the g
 Designed, developed, and maintained with perfection by:
 
 - **Ajay Kumar Reddy Krishnareddygari**
+- 🌐 **Live App**: [akr-brand-guidelines-snp.vercel.app](https://akr-brand-guidelines-snp.vercel.app/)
 - 🌐 **Portfolio**: [ajaykumarreddykrishnareddygari-portfolio.vercel.app](https://ajaykumarreddykrishnareddygari-portfolio.vercel.app/)
 - 🐙 **GitHub**: [@ajaykumarreddy-k](https://github.com/ajaykumarreddy-k)
 
