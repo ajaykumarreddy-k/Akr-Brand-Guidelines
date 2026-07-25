@@ -29,38 +29,13 @@ const slideMappings: SlideMapping[] = [
 ];
 
 export function App() {
-  const [assets, setAssets] = useState<string[]>([]);
   const [activeSlideIndex, setActiveSlideIndex] = useState<number>(0);
   const [activeSection, setActiveSection] = useState<string>("strategy");
-  const [fullscreenSlide, setFullscreenSlide] = useState<string | null>(null);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
   const viewerRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
-    fetch("/api/assets")
-      .then((res) => {
-        if (!res.ok) {
-          return fetch("/api/assets.json");
-        }
-        return res;
-      })
-      .then((res) => {
-        if (!res.ok) throw new Error("API route unavailable");
-        return res.json();
-      })
-      .then((data) => {
-        if (data.assets && data.assets.length > 0) {
-          setAssets(data.assets);
-        } else {
-          setAssets(slideMappings.map((s) => s.file));
-        }
-      })
-      .catch(() => {
-        setAssets(slideMappings.map((s) => s.file));
-      });
-  }, []);
-
-  const currentSlideFile = assets[activeSlideIndex] || "1.svg";
   const currentMapping = slideMappings[activeSlideIndex] || slideMappings[0];
+  const currentSlideFile = currentMapping.file;
 
   const selectSection = (section: string, defaultIndex: number) => {
     setActiveSection(section);
@@ -69,42 +44,36 @@ export function App() {
   };
 
   const handleNext = () => {
-    if (!assets.length) return;
-    const nextIdx = (activeSlideIndex + 1) % assets.length;
-    setActiveSlideIndex(nextIdx);
-    setActiveSection(slideMappings[nextIdx]?.section || "strategy");
-    if (fullscreenSlide) {
-      setFullscreenSlide(assets[nextIdx]);
-    }
+    setActiveSlideIndex((prev) => {
+      const nextIdx = (prev + 1) % slideMappings.length;
+      setActiveSection(slideMappings[nextIdx].section);
+      return nextIdx;
+    });
   };
 
   const handlePrev = () => {
-    if (!assets.length) return;
-    const prevIdx = (activeSlideIndex - 1 + assets.length) % assets.length;
-    setActiveSlideIndex(prevIdx);
-    setActiveSection(slideMappings[prevIdx]?.section || "strategy");
-    if (fullscreenSlide) {
-      setFullscreenSlide(assets[prevIdx]);
-    }
+    setActiveSlideIndex((prev) => {
+      const prevIdx = (prev - 1 + slideMappings.length) % slideMappings.length;
+      setActiveSection(slideMappings[prevIdx].section);
+      return prevIdx;
+    });
   };
 
-  // Keyboard navigation & ESC handler for fullscreen modal
+  // Global Keyboard navigation (Arrow Left, Arrow Right, ESC)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (fullscreenSlide) {
-        if (e.key === "Escape") {
-          setFullscreenSlide(null);
-        } else if (e.key === "ArrowRight") {
-          handleNext();
-        } else if (e.key === "ArrowLeft") {
-          handlePrev();
-        }
+      if (e.key === "Escape") {
+        setIsFullscreen(false);
+      } else if (e.key === "ArrowRight") {
+        handleNext();
+      } else if (e.key === "ArrowLeft") {
+        handlePrev();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [fullscreenSlide, activeSlideIndex, assets]);
+  }, []);
 
   return (
     <div className="wrapper">
@@ -193,11 +162,11 @@ export function App() {
           <div className="image-box">
             <div className="image-box-header">
               <span className="box-slide-num">
-                SLIDE {String(activeSlideIndex + 1).padStart(2, "0")} / {String(assets.length || 18).padStart(2, "0")}
+                SLIDE {String(activeSlideIndex + 1).padStart(2, "0")} / {String(slideMappings.length).padStart(2, "0")}
               </span>
               <button
                 className="fullscreen-badge"
-                onClick={() => setFullscreenSlide(currentSlideFile)}
+                onClick={() => setIsFullscreen(true)}
               >
                 ⤢ FULLSCREEN
               </button>
@@ -205,9 +174,10 @@ export function App() {
 
             <div
               className="image-box-stage"
-              onClick={() => setFullscreenSlide(currentSlideFile)}
+              onClick={() => setIsFullscreen(true)}
             >
               <img
+                key={currentSlideFile}
                 src={`/assets/${currentSlideFile}`}
                 alt={currentMapping.name}
               />
@@ -228,7 +198,7 @@ export function App() {
         </div>
       </section>
 
-      {/* FOOTER BAR EXACTLY MATCHING REFERENCE SCREENSHOT */}
+      {/* FOOTER BAR */}
       <footer className="site-footer">
         <div className="footer-left">
           <span>Built by </span>
@@ -278,14 +248,14 @@ export function App() {
         </div>
       </footer>
 
-      {/* FULLSCREEN LIGHTBOX MODAL WITH ESC & NEXT/PREV NAVIGATION */}
-      {fullscreenSlide && (
-        <div className="lightbox-modal" onClick={() => setFullscreenSlide(null)}>
+      {/* FULLSCREEN LIGHTBOX MODAL */}
+      {isFullscreen && (
+        <div className="lightbox-modal" onClick={() => setIsFullscreen(false)}>
           <div className="lightbox-bar" onClick={(e) => e.stopPropagation()}>
             <span className="lightbox-counter">
-              SLIDE {String(activeSlideIndex + 1).padStart(2, "0")} / {String(assets.length || 18).padStart(2, "0")} — {currentMapping.name}
+              SLIDE {String(activeSlideIndex + 1).padStart(2, "0")} / {String(slideMappings.length).padStart(2, "0")} — {currentMapping.name}
             </span>
-            <button className="modal-close-btn" onClick={() => setFullscreenSlide(null)}>
+            <button className="modal-close-btn" onClick={() => setIsFullscreen(false)}>
               ✕ CLOSE (ESC)
             </button>
           </div>
@@ -300,8 +270,9 @@ export function App() {
             </button>
 
             <img
-              src={`/assets/${fullscreenSlide}`}
-              alt="Fullscreen Slide"
+              key={`modal-${currentSlideFile}`}
+              src={`/assets/${currentSlideFile}`}
+              alt={currentMapping.name}
               className="modal-svg-image"
             />
 
